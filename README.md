@@ -18,7 +18,7 @@ I implemented raw camera video playback, but wanted a place to keep the demosaic
 
 ## To-do List
 
-* [ ] [Malvar-He-Cutler](https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/Demosaicing_ICASSP04.pdf) demosaic algorithm
+* [x] [Malvar-He-Cutler](https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/Demosaicing_ICASSP04.pdf) demosaic algorithm
 * [ ] More upon request
 
 ## Reference Documents
