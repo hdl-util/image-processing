@@ -18,9 +18,10 @@ I implemented raw camera video playback, but wanted a place to keep the demosaic
 
 ## To-do List
 
-* [x] [Malvar-He-Cutler](https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/Demosaicing_ICASSP04.pdf) demosaic algorithm
+* [ ] [Malvar-He-Cutler](https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/Demosaicing_ICASSP04.pdf) demosaic algorithm
 * [ ] More upon request
 
 ## Reference Documents
 
 * [High-Quality Linear Interpolation for Demosaicing of Bayer-Patterned Color Images](https://www.microsoft.com/en-us/research/publication/high-quality-linear-interpolation-for-demosaicing-of-bayer-patterned-color-images/)
+* [Malvar-He-Cutler Linear Image Demosaicking](https://www.researchgate.net/publication/270045976_Malvar-He-Cutler_Linear_Image_Demosaicking)
