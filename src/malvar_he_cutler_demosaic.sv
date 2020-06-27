@@ -65,7 +65,7 @@ begin
 end
 
 logic [11:0] estimate_of_other_non_green_at_non_green;
-logic [3:0] estimate_of_other_non_green_at_non_green_counter;
+logic [4:0] estimate_of_other_non_green_at_non_green_counter;
 always_comb
 begin
     estimate_of_other_non_green_at_non_green = 12'd6 * 12'(pixel_matrix[2][2]);
@@ -101,24 +101,18 @@ begin
     if (pixel_enable_matrix[2][4])
         estimate_of_other_non_green_at_non_green -= (12'd3 * 12'(pixel_matrix[2][4])) / 12'd2;
 
-    if (3'(pixel_enable_matrix[0][2]) + 3'(pixel_enable_matrix[4][2]) + 3'(pixel_enable_matrix[2][0]) + 3'(pixel_enable_matrix[2][4]) == 3'd4)
-    begin
-        estimate_of_other_non_green_at_non_green_counter -= 4'd6;
-    end
-    else if (3'(pixel_enable_matrix[0][2]) + 3'(pixel_enable_matrix[4][2]) + 3'(pixel_enable_matrix[2][0]) + 3'(pixel_enable_matrix[2][4]) == 3'd3)
-    begin
-        estimate_of_other_non_green_at_non_green_counter -= 4'd4; // TODO: 4.5 approximation
-    end
-    else if (3'(pixel_enable_matrix[0][2]) + 3'(pixel_enable_matrix[4][2]) + 3'(pixel_enable_matrix[2][0]) + 3'(pixel_enable_matrix[2][4]) == 3'd2)
-    begin
-        estimate_of_other_non_green_at_non_green_counter -= 4'd3;
-    end
-    else if (3'(pixel_enable_matrix[0][2]) + 3'(pixel_enable_matrix[4][2]) + 3'(pixel_enable_matrix[2][0]) + 3'(pixel_enable_matrix[2][4]) == 3'd1)
-    begin
-        estimate_of_other_non_green_at_non_green_counter -= 4'd1; // TODO: 1.5 approximation
-    end
 
-    estimate_of_other_non_green_at_non_green /= estimate_of_other_non_green_at_non_green_counter;
+    estimate_of_other_non_green_at_non_green_counter *= 5'd2; // Scaling up to acoomodate 0.5
+    if (3'(pixel_enable_matrix[0][2]) + 3'(pixel_enable_matrix[4][2]) + 3'(pixel_enable_matrix[2][0]) + 3'(pixel_enable_matrix[2][4]) == 3'd4)
+        estimate_of_other_non_green_at_non_green_counter -= 5'd12;
+    else if (3'(pixel_enable_matrix[0][2]) + 3'(pixel_enable_matrix[4][2]) + 3'(pixel_enable_matrix[2][0]) + 3'(pixel_enable_matrix[2][4]) == 3'd3)
+        estimate_of_other_non_green_at_non_green_counter -= 5'd9;
+    else if (3'(pixel_enable_matrix[0][2]) + 3'(pixel_enable_matrix[4][2]) + 3'(pixel_enable_matrix[2][0]) + 3'(pixel_enable_matrix[2][4]) == 3'd2)
+        estimate_of_other_non_green_at_non_green_counter -= 5'd6;
+    else if (3'(pixel_enable_matrix[0][2]) + 3'(pixel_enable_matrix[4][2]) + 3'(pixel_enable_matrix[2][0]) + 3'(pixel_enable_matrix[2][4]) == 3'd1)
+        estimate_of_other_non_green_at_non_green_counter -= 5'd3;
+
+    estimate_of_other_non_green_at_non_green = 12'((13'd2 * 13'(estimate_of_other_non_green_at_non_green)) / estimate_of_other_non_green_at_non_green_counter);
 end
 
 logic [11:0] estimate_of_non_green_in_same_row_as_green;
