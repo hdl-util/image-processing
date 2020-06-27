@@ -12,8 +12,8 @@ I implemented raw camera video playback, but wanted a place to keep the demosaic
 
 1. Take files from `src/` and add them to your own project. If you use [hdlmake](https://hdlmake.readthedocs.io/en/master/), you can add this repository itself as a remote module.
 1. Other helpful modules are also available in this GitHub organization.
-1. Consult the testbench in `test/demosaic_tb.sv` for example usage.
-1. Read through the parameter descriptions in `demosaic.sv` and tailor any instantiations to your situation.
+1. Consult the testbench in `test/malvar_he_cutler_demosaic_tb.sv` for example usage.
+1. Read through the parameter descriptions in `malvar_he_cutler_demosaic.sv` and tailor any instantiations to your situation.
 1. Please create an issue if you run into a problem or have any questions.
 
 ## To-do List
