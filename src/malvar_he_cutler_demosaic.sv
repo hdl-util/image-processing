@@ -116,7 +116,7 @@ begin
 end
 
 logic [11:0] estimate_of_non_green_in_same_row_as_green;
-logic [3:0] estimate_of_non_green_in_same_row_as_green_counter;
+logic [4:0] estimate_of_non_green_in_same_row_as_green_counter;
 always_comb
 begin
     estimate_of_non_green_in_same_row_as_green = 12'd5 * 12'(pixel_matrix[2][2]);
@@ -132,14 +132,6 @@ begin
         estimate_of_non_green_in_same_row_as_green += 12'd4 * 12'(pixel_matrix[2][3]);
         estimate_of_non_green_in_same_row_as_green_counter += 4'd4;
     end
-
-    if (pixel_enable_matrix[0][2])
-        estimate_of_non_green_in_same_row_as_green += 12'(pixel_matrix[0][2]) / 12'd2;
-    if (pixel_enable_matrix[4][2])
-        estimate_of_non_green_in_same_row_as_green += 12'(pixel_matrix[4][2]) / 12'd2;
-    
-    if (pixel_enable_matrix[0][2] && pixel_enable_matrix[4][2])
-        estimate_of_non_green_in_same_row_as_green_counter -= 4'd1; // TODO: approximate 0.5 when only 1 present
 
     if (pixel_enable_matrix[2][0])
     begin
@@ -173,11 +165,23 @@ begin
         estimate_of_non_green_in_same_row_as_green_counter -= 4'd1;
     end
 
-    estimate_of_non_green_in_same_row_as_green /= estimate_of_non_green_in_same_row_as_green_counter;
+    estimate_of_non_green_in_same_row_as_green_counter *= 5'd2; // scaling up to accomodate 0.5
+    if (pixel_enable_matrix[0][2])
+    begin
+        estimate_of_non_green_in_same_row_as_green += 12'(pixel_matrix[0][2]) / 12'd2;
+        estimate_of_non_green_in_same_row_as_green_counter += 5'd1;
+    end
+    if (pixel_enable_matrix[4][2])
+    begin
+        estimate_of_non_green_in_same_row_as_green += 12'(pixel_matrix[4][2]) / 12'd2;
+        estimate_of_non_green_in_same_row_as_green_counter += 5'd1;
+    end
+
+    estimate_of_non_green_in_same_row_as_green = 12'((13'd2 * 13'(estimate_of_non_green_in_same_row_as_green)) / estimate_of_non_green_in_same_row_as_green_counter);
 end
 
 logic [11:0] estimate_of_non_green_in_different_row_from_green;
-logic [3:0] estimate_of_non_green_in_different_row_from_green_counter;
+logic [4:0] estimate_of_non_green_in_different_row_from_green_counter;
 always_comb
 begin
     estimate_of_non_green_in_different_row_from_green = 12'd5 * 12'(pixel_matrix[2][2]);
@@ -234,7 +238,19 @@ begin
         estimate_of_non_green_in_different_row_from_green_counter -= 4'd1;
     end
 
-    estimate_of_non_green_in_different_row_from_green /= estimate_of_non_green_in_different_row_from_green_counter;
+    estimate_of_non_green_in_different_row_from_green_counter *= 5'd2; // scaling up to accomodate 0.5
+    if (pixel_enable_matrix[2][0])
+    begin
+        estimate_of_non_green_in_different_row_from_green += 12'(pixel_matrix[0][2]) / 12'd2;
+        estimate_of_non_green_in_different_row_from_green_counter += 5'd1;
+    end
+    if (pixel_enable_matrix[2][4])
+    begin
+        estimate_of_non_green_in_different_row_from_green += 12'(pixel_matrix[4][2]) / 12'd2;
+        estimate_of_non_green_in_different_row_from_green_counter += 5'd1;
+    end
+
+    estimate_of_non_green_in_different_row_from_green = 12'((13'd2 * 13'(estimate_of_non_green_in_different_row_from_green)) / estimate_of_non_green_in_different_row_from_green_counter);
 end
 
 always_comb
