@@ -1,6 +1,6 @@
 # Image processing
 
-[![Build Status](https://travis-ci.com/hdl-util/image.svg?branch=master)](https://travis-ci.com/hdl-util/image)
+[![Build Status](https://travis-ci.com/hdl-util/image-processing.svg?branch=master)](https://travis-ci.com/hdl-util/image-processing)
 
 SystemVerilog code for image processing tasks like [demosaicing](https://en.wikipedia.org/wiki/Demosaicing).
 
