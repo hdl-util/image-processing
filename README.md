@@ -24,4 +24,5 @@ I implemented raw camera video playback, but wanted a place to keep the demosaic
 ## Reference Documents
 
 * [High-Quality Linear Interpolation for Demosaicing of Bayer-Patterned Color Images](https://www.microsoft.com/en-us/research/publication/high-quality-linear-interpolation-for-demosaicing-of-bayer-patterned-color-images/)
+  * Microsoft research paper for the Malvar-He-Cutler linear demosaic algo, circa 2004
 * [Malvar-He-Cutler Linear Image Demosaicking](https://www.researchgate.net/publication/270045976_Malvar-He-Cutler_Linear_Image_Demosaicking)
