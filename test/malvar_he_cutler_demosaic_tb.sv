@@ -1,9 +1,10 @@
 module malvar_he_cutler_demosaic_tb ();
     logic [7:0] pixel_matrix [0:4] [0:4] = '{default: 8'hAB};
-    logic pixel_enable_matrix [0:4] [0:4] = '{default: 1'b1};
+    logic pixel_row_enable [0:4] = '{default: 1'b1};
+    logic pixel_column_enable [0:4] = '{default: 1'b1};
     logic [1:0] center_pixel_type;
     logic [23:0] center_pixel_rgb;
-    malvar_he_cutler_demosaic malvar_he_cutler_demosaic(.pixel_matrix(pixel_matrix), .pixel_enable_matrix(pixel_enable_matrix), .center_pixel_type(center_pixel_type), .center_pixel_rgb(center_pixel_rgb));
+    malvar_he_cutler_demosaic malvar_he_cutler_demosaic(.pixel_matrix(pixel_matrix), .pixel_row_enable(pixel_row_enable), .pixel_column_enable(pixel_column_enable), .center_pixel_type(center_pixel_type), .center_pixel_rgb(center_pixel_rgb));
     initial
     begin
         // Gray-preservation test:

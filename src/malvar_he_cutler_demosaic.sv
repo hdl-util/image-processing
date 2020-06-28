@@ -3,7 +3,8 @@ module malvar_he_cutler_demosaic (
     // Used to handle corners/edges of an image.
     // It is expected that the center pixel will always be present,
     // otherwise the behavior is undefined.
-    input logic pixel_enable_matrix [0:4] [0:4],
+    input logic pixel_row_enable [0:4],
+    input logic pixel_column_enable [0:4],
     // 0 = Blue
     // 1 = Green in blue row (in BGGR, the first green)
     // 2 = Green in red row (in BGGR, the second green)
@@ -11,6 +12,15 @@ module malvar_he_cutler_demosaic (
     input logic [1:0] center_pixel_type,
     output logic [23:0] center_pixel_rgb
 );
+
+logic pixel_enable_matrix [0:4] [0:4];
+integer i, j;
+always_comb
+begin
+    for (i = 0; i < 5; i++)
+        for (j = 0; j < 5; j++)
+            pixel_enable_matrix[i][j] = pixel_row_enable[i] && pixel_column_enable[j];
+end
 
 logic [11:0] estimate_of_green_at_non_green;
 logic [3:0] estimate_of_green_at_non_green_counter;
