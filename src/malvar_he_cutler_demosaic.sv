@@ -166,12 +166,17 @@ begin
     end
 
     estimate_of_non_green_in_same_row_as_green_counter *= 5'd2; // scaling up to accomodate 0.5
-    if (pixel_enable_matrix[0][2])
+    if (pixel_enable_matrix[0][2] && pixel_enable_matrix[4][2]) // preserves a bit loss that would occur otherwise
+    begin
+        estimate_of_non_green_in_same_row_as_green += (12'(pixel_matrix[0][2]) + 12'(pixel_matrix[4][2])) / 12'd2;
+        estimate_of_non_green_in_same_row_as_green_counter += 5'd2;
+    end
+    else if (pixel_enable_matrix[0][2])
     begin
         estimate_of_non_green_in_same_row_as_green += 12'(pixel_matrix[0][2]) / 12'd2;
         estimate_of_non_green_in_same_row_as_green_counter += 5'd1;
     end
-    if (pixel_enable_matrix[4][2])
+    else if (pixel_enable_matrix[4][2])
     begin
         estimate_of_non_green_in_same_row_as_green += 12'(pixel_matrix[4][2]) / 12'd2;
         estimate_of_non_green_in_same_row_as_green_counter += 5'd1;
@@ -231,12 +236,17 @@ begin
     end
 
     estimate_of_non_green_in_different_row_from_green_counter *= 5'd2; // scaling up to accomodate 0.5
-    if (pixel_enable_matrix[2][0])
+    if (pixel_enable_matrix[2][0] && pixel_enable_matrix[2][4]) // preserves a bit loss that would occur otherwise
+    begin
+        estimate_of_non_green_in_different_row_from_green += (12'(pixel_matrix[2][0]) + 12'(pixel_matrix[2][4])) / 12'd2;
+        estimate_of_non_green_in_different_row_from_green_counter += 5'd2;
+    end
+    else if (pixel_enable_matrix[2][0])
     begin
         estimate_of_non_green_in_different_row_from_green += 12'(pixel_matrix[0][2]) / 12'd2;
         estimate_of_non_green_in_different_row_from_green_counter += 5'd1;
     end
-    if (pixel_enable_matrix[2][4])
+    else if (pixel_enable_matrix[2][4])
     begin
         estimate_of_non_green_in_different_row_from_green += 12'(pixel_matrix[4][2]) / 12'd2;
         estimate_of_non_green_in_different_row_from_green_counter += 5'd1;
@@ -250,28 +260,30 @@ begin
     case (center_pixel_type)
         2'b11: // Red
         begin
-            center_pixel_rgb[2] = pixel_matrix[2][2];
-            center_pixel_rgb[1] = 8'(estimate_of_green_at_non_green);
-            center_pixel_rgb[0] = 8'(estimate_of_other_non_green_at_non_green);
+            center_pixel_rgb[23:16] = pixel_matrix[2][2];
+            center_pixel_rgb[15:8] = 8'(estimate_of_green_at_non_green);
+            center_pixel_rgb[7:0] = 8'(estimate_of_other_non_green_at_non_green);
         end
         2'b10: // Green in red row
         begin
-            center_pixel_rgb[2] = 8'(estimate_of_non_green_in_same_row_as_green);
-            center_pixel_rgb[1] = pixel_matrix[2][2];
-            center_pixel_rgb[0] = 8'(estimate_of_non_green_in_different_row_from_green);
+            center_pixel_rgb[23:16] = 8'(estimate_of_non_green_in_same_row_as_green);
+            center_pixel_rgb[15:8] = pixel_matrix[2][2];
+            center_pixel_rgb[7:0] = 8'(estimate_of_non_green_in_different_row_from_green);
         end
         2'b01: // Green in blue row
         begin
-            center_pixel_rgb[2] = 8'(estimate_of_non_green_in_different_row_from_green);
-            center_pixel_rgb[1] = pixel_matrix[2][2];
-            center_pixel_rgb[0] = 8'(estimate_of_non_green_in_same_row_as_green);
+            center_pixel_rgb[23:16] = 8'(estimate_of_non_green_in_different_row_from_green);
+            center_pixel_rgb[15:8] = pixel_matrix[2][2];
+            center_pixel_rgb[7:0] = 8'(estimate_of_non_green_in_same_row_as_green);
         end
         2'b00: // Blue
         begin
-            center_pixel_rgb[2] = 8'(estimate_of_other_non_green_at_non_green);
-            center_pixel_rgb[1] = 8'(estimate_of_green_at_non_green);
-            center_pixel_rgb[0] = pixel_matrix[2][2];
+            center_pixel_rgb[23:16] = 8'(estimate_of_other_non_green_at_non_green);
+            center_pixel_rgb[15:8] = 8'(estimate_of_green_at_non_green);
+            center_pixel_rgb[7:0] = pixel_matrix[2][2];
         end
+        default:
+            center_pixel_rgb = 24'dx;
     endcase
 end
 
