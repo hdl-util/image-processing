@@ -102,7 +102,7 @@ begin
         estimate_of_other_non_green_at_non_green -= (12'd3 * 12'(pixel_matrix[2][4])) / 12'd2;
 
 
-    estimate_of_other_non_green_at_non_green_counter *= 5'd2; // Scaling up to acoomodate 0.5
+    estimate_of_other_non_green_at_non_green_counter *= 5'd2; // Scaling up to accomodate 0.5
     if (3'(pixel_enable_matrix[0][2]) + 3'(pixel_enable_matrix[4][2]) + 3'(pixel_enable_matrix[2][0]) + 3'(pixel_enable_matrix[2][4]) == 3'd4)
         estimate_of_other_non_green_at_non_green_counter -= 5'd12;
     else if (3'(pixel_enable_matrix[0][2]) + 3'(pixel_enable_matrix[4][2]) + 3'(pixel_enable_matrix[2][0]) + 3'(pixel_enable_matrix[2][4]) == 3'd3)
@@ -166,7 +166,7 @@ begin
     end
 
     estimate_of_non_green_in_same_row_as_green_counter *= 5'd2; // scaling up to accomodate 0.5
-    if (pixel_enable_matrix[0][2] && pixel_enable_matrix[4][2]) // preserves a bit loss that would occur otherwise
+    if (pixel_enable_matrix[0][2] && pixel_enable_matrix[4][2]) // prevents a bit loss that would occur otherwise
     begin
         estimate_of_non_green_in_same_row_as_green += (12'(pixel_matrix[0][2]) + 12'(pixel_matrix[4][2])) / 12'd2;
         estimate_of_non_green_in_same_row_as_green_counter += 5'd2;
@@ -236,7 +236,7 @@ begin
     end
 
     estimate_of_non_green_in_different_row_from_green_counter *= 5'd2; // scaling up to accomodate 0.5
-    if (pixel_enable_matrix[2][0] && pixel_enable_matrix[2][4]) // preserves a bit loss that would occur otherwise
+    if (pixel_enable_matrix[2][0] && pixel_enable_matrix[2][4]) // prevents a bit loss that would occur otherwise
     begin
         estimate_of_non_green_in_different_row_from_green += (12'(pixel_matrix[2][0]) + 12'(pixel_matrix[2][4])) / 12'd2;
         estimate_of_non_green_in_different_row_from_green_counter += 5'd2;
