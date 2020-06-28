@@ -198,14 +198,6 @@ begin
         estimate_of_non_green_in_different_row_from_green_counter += 4'd4;
     end
 
-    if (pixel_enable_matrix[2][0])
-        estimate_of_non_green_in_different_row_from_green += 12'(pixel_matrix[2][0]) / 12'd2;
-    if (pixel_enable_matrix[2][4])
-        estimate_of_non_green_in_different_row_from_green += 12'(pixel_matrix[2][4]) / 12'd2;
-
-    if (pixel_enable_matrix[2][0] && pixel_enable_matrix[2][4])
-        estimate_of_non_green_in_different_row_from_green_counter -= 4'd1; // TODO: approximate 0.5 when only 1 present
-
     if (pixel_enable_matrix[0][2])
     begin
         estimate_of_non_green_in_different_row_from_green -= 12'(pixel_matrix[0][2]);
